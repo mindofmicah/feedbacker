@@ -1,0 +1,24 @@
+{
+    "name": "mindofmicah/feedbackers",
+    "description": "",
+    "authors": [
+        {
+            "name": "micah eschbacher",
+            "email": "micah@whamdonk.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Mindofmicah\\Feedbackers": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require-dev": {
+        "phpspec/phpspec": "2.*",
+        "phpspec/nyan-formatters": "1.*"
+    }
+}
