@@ -1,12 +1,13 @@
 <?php
-
 namespace spec\MindOfMicah\Feedbacker;
+
+require (__DIR__ . '/../../../stubs/Artisan.php');
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-
-require (__DIR__ . '/../../../stubs/Artisan.php');
+use Illuminate\Foundation\Artisan;
+use MindOfMicah\Feedbacker\GeneratorGenerator;
 
 class GeneratorGeneratorSpec extends ObjectBehavior
 {
@@ -19,8 +20,25 @@ class GeneratorGeneratorSpec extends ObjectBehavior
         $this->shouldThrow('\Exception')->duringGenerate();
     }
 
-    function it_blah(\Illuminate\Foundation\Artisan $artisan) {
+    function it_generates_a_migration_when_appropriate(Artisan $artisan) {
+        $artisan->call(
+            'generate:migration', 
+            ['migrationName'=>'create_model_table','fields'=>'field=string']
+        )->shouldBeCalled();
+        
         $this->artisan($artisan);
-        $this->generate()->shouldBe(true);
+        $this->generate('model', 'field=string', GeneratorGenerator::GEN_MIGRATION)
+            ->shouldBe(true);
+    }
+
+    function it_generates_a_model_when_appropriate(Artisan $artisan) {
+        $artisan->call(
+            'generate:model', 
+            ['modelName' => 'table']
+        )->shouldBeCalled(); 
+
+        $this->artisan($artisan);
+        $this->generate('table', 'field=string', GeneratorGenerator::GEN_MODEL)
+            ->shouldBe(true);
     }
 }
