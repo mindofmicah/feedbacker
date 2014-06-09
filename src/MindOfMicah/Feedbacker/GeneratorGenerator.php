@@ -11,6 +11,11 @@ class GeneratorGenerator
     const GEN_MIGRATION = 1;
     const GEN_MODEL = 2;
 
+    public function __construct(Artisan $artisan)
+    {
+        $this->artisan = $artisan;
+    }
+
     /**
      * Generate the laravel generators based off of passed in information
      *
@@ -52,18 +57,5 @@ class GeneratorGenerator
     private function buildMigrationName($name)
     {
         return "create_{$name}_table";
-    }
-
-    /**
-     * Setter injection to be able to run artisan commands from the class
-     *
-     * @param Artisan $artisan Instance of artisan to run commands
-     *
-     * @return GeneratorGenerator
-     */
-    public function artisan(Artisan $artisan)
-    {
-        $this->artisan = $artisan;
-        return $this;
     }
 }
