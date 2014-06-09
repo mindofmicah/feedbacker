@@ -1,0 +1,22 @@
+<?php
+use MindOfMicah\Feedbacker\Feedbacker;
+
+class FeedbackerController extends BaseController
+{
+    protected $layout = '%layout%';
+
+    public function __construct(Feedbacker $feedbacker)
+    {
+        $this->feedbacker = $feedbacker;
+    }
+
+    public function create()
+    {
+        $this->layout->%section% = View::make('feedbacker.create');
+    }
+
+    public function store()
+    {
+        $this->feedbacker->submit(Input::get('email'), Input::get('message'));
+    }
+}
