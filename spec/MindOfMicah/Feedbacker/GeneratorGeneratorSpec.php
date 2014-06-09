@@ -11,13 +11,13 @@ use MindOfMicah\Feedbacker\GeneratorGenerator;
 
 class GeneratorGeneratorSpec extends ObjectBehavior
 {
+    public function let(Artisan $artisan)
+    {
+        $this->beConstructedWith($artisan);
+    }
     function it_is_initializable()
     {
         $this->shouldHaveType('MindOfMicah\Feedbacker\GeneratorGenerator');
-    }
-
-    function it_requires_an_instance_of_artisan() {
-        $this->shouldThrow('\Exception')->duringGenerate();
     }
 
     function it_generates_a_migration_when_appropriate(Artisan $artisan) {
@@ -26,7 +26,7 @@ class GeneratorGeneratorSpec extends ObjectBehavior
             ['migrationName'=>'create_model_table','fields'=>'field=string']
         )->shouldBeCalled();
         
-        $this->artisan($artisan);
+        $this->beConstructedWith($artisan);
         $this->generate('model', 'field=string', GeneratorGenerator::GEN_MIGRATION)
             ->shouldBe(true);
     }
@@ -37,7 +37,7 @@ class GeneratorGeneratorSpec extends ObjectBehavior
             ['modelName' => 'table']
         )->shouldBeCalled(); 
 
-        $this->artisan($artisan);
+        $this->beConstructedWith($artisan);
         $this->generate('table', 'field=string', GeneratorGenerator::GEN_MODEL)
             ->shouldBe(true);
     }
