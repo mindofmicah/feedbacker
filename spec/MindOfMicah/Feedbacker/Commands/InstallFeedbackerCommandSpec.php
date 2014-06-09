@@ -37,8 +37,18 @@ class InstallFeedbackerCommandSpec extends ObjectBehavior
 
     public function it_should_update_the_route_file_with_the_feedbacker_routes(GeneratorGenerator $g, Filesystem $f)
     {
-        $f->append('app/routes.php', 'Route::get(\'feedback\', \'FeedbackerController@create\')')->willReturn(1)->shouldBeCalled();
-        $f->append('app/routes.php', 'Route::post(\'feedback\', \'FeedbackerController@store\')')->willReturn(1)->shouldBeCalled();
+        $f->append('app/routes.php', "// Routes particular to feedbacker\n")->shouldBeCalled();
+        $f->append(
+                'app/routes.php', 
+                "Route::get('feedback', 'FeedbackerController@create');\n"
+            )->willReturn(1)
+            ->shouldBeCalled();
+        $f->append(
+                'app/routes.php',
+                "Route::post('feedback', 'FeedbackerController@store');\n"
+            )->willReturn(1)
+            ->shouldBeCalled();
+
         $this->fire()->shouldBe(null);
     }
 }

@@ -27,9 +27,7 @@ class InstallFeedbackerCommand extends Command
             3
         ); 
 
-        $route_name = 'feedback';
-        $this->file->append('app/routes.php', 'Route::get(\'' . $route_name . '\', \'FeedbackerController@create\')');
-        $this->file->append('app/routes.php', 'Route::post(\'' . $route_name . '\', \'FeedbackerController@store\')');
+        $this->addRouteToRoutesFile();
     }
 
     private function buildFieldString()
@@ -42,7 +40,23 @@ class InstallFeedbackerCommand extends Command
         }
 
         return $param_string;
-   }
+    }
+
+    private function addRouteToRoutesFile()
+    {
+        $filename = 'app/routes.php'; 
+        $route_name = 'feedback';
+
+        $contents = [
+            '// Routes particular to feedbacker',
+            "Route::get('{$route_name}', 'FeedbackerController@create');",
+            "Route::post('{$route_name}', 'FeedbackerController@store');"
+        ];  
+
+        foreach ($contents as $content_line) {
+            $this->file->append($filename, $content_line . "\n");
+        }
+    }
 
     protected function getArguments()
     {
