@@ -1,12 +1,13 @@
 <?php
 
 namespace MindOfMicah\Feedbacker\Commands;
-
+use Illuminate\Filesystem\Filesystem;
 class InstallFeedbackerCommand
 {
-    public function __construct(\MindOfMicah\Feedbacker\GeneratorGenerator $g)
+    public function __construct(\MindOfMicah\Feedbacker\GeneratorGenerator $g, Filesystem $f)
     {
         $this->generator = $g;
+        $this->file = $f;
     }
 
     public function fire()
@@ -16,6 +17,10 @@ class InstallFeedbackerCommand
             $this->buildFieldString(),
             3
         ); 
+
+        $route_name = 'feedback';
+        $this->file->append('app/routes.php', 'Route::get(\'' . $route_name . '\', \'FeedbackerController@create\')');
+        $this->file->append('app/routes.php', 'Route::post(\'' . $route_name . '\', \'FeedbackerController@store\')');
     }
 
     private function buildFieldString()
