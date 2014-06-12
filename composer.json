@@ -13,7 +13,8 @@
         "illuminate/database": "4.2.*",
         "illuminate/filesystem": "4.2.*",
         "illuminate/console": "4.2.*",
-        "way/generators": "2.*"
+        "way/generators": "2.*",
+        "mindofmicah/fielder": "*"
     },
     "autoload": {
         "psr-4": {
@@ -25,5 +26,11 @@
     "require-dev": {
         "phpspec/phpspec": "2.*",
         "phpspec/nyan-formatters": "1.*"
+    },
+    "repositories": {
+        "mindofmicah/fielder": {
+            "type": "vcs",
+            "url": "https://github.com/mindofmicah/fielder.git"
+        }
     }
 }
